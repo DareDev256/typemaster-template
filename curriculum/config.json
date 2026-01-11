@@ -1,0 +1,27 @@
+{
+  "siteName": "TypeMaster",
+  "tagline": "Learn anything by typing it",
+  "description": "A customizable typing game for learning any topic",
+  "theme": {
+    "primary": "#00FF9F",
+    "secondary": "#00D4FF",
+    "accent": "#FF6B9D"
+  },
+  "features": {
+    "soundEffects": true,
+    "studyMode": true,
+    "aiChallenge": true,
+    "leaderboard": true
+  },
+  "gameModes": {
+    "quiz": {
+      "enabled": true,
+      "description": "Type the term that matches the definition"
+    },
+    "race": {
+      "enabled": true,
+      "duration": 60,
+      "description": "Type as many terms as possible in 60 seconds"
+    }
+  }
+}

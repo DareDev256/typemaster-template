@@ -1,0 +1,136 @@
+{
+  "id": "web-development",
+  "title": "Web Development",
+  "description": "Core concepts for building modern websites",
+  "icon": "full-stack",
+  "order": 2,
+  "concepts": [
+    {
+      "id": "web-001",
+      "term": "HTML",
+      "definition": "Markup language for structuring web page content",
+      "difficulty": "easy"
+    },
+    {
+      "id": "web-002",
+      "term": "CSS",
+      "definition": "Stylesheet language for designing web page appearance",
+      "difficulty": "easy"
+    },
+    {
+      "id": "web-003",
+      "term": "JavaScript",
+      "definition": "Programming language for interactive web functionality",
+      "difficulty": "easy"
+    },
+    {
+      "id": "web-004",
+      "term": "DOM",
+      "definition": "Document Object Model - tree structure representing HTML elements",
+      "difficulty": "medium"
+    },
+    {
+      "id": "web-005",
+      "term": "API",
+      "definition": "Application Programming Interface for system communication",
+      "difficulty": "easy"
+    },
+    {
+      "id": "web-006",
+      "term": "HTTP",
+      "definition": "Protocol for transferring data between client and server",
+      "difficulty": "easy"
+    },
+    {
+      "id": "web-007",
+      "term": "responsive design",
+      "definition": "Layouts that adapt to different screen sizes",
+      "difficulty": "medium"
+    },
+    {
+      "id": "web-008",
+      "term": "flexbox",
+      "definition": "CSS layout model for arranging items in one dimension",
+      "difficulty": "medium"
+    },
+    {
+      "id": "web-009",
+      "term": "grid",
+      "definition": "CSS layout model for two-dimensional arrangements",
+      "difficulty": "medium"
+    },
+    {
+      "id": "web-010",
+      "term": "component",
+      "definition": "Reusable piece of UI with its own logic and styling",
+      "difficulty": "medium"
+    },
+    {
+      "id": "web-011",
+      "term": "state",
+      "definition": "Data that changes over time and affects component rendering",
+      "difficulty": "medium"
+    },
+    {
+      "id": "web-012",
+      "term": "props",
+      "definition": "Data passed from parent to child component",
+      "difficulty": "medium"
+    },
+    {
+      "id": "web-013",
+      "term": "hook",
+      "definition": "Function that adds React features to functional components",
+      "difficulty": "hard"
+    },
+    {
+      "id": "web-014",
+      "term": "SSR",
+      "definition": "Server-Side Rendering - generating HTML on the server",
+      "difficulty": "hard"
+    },
+    {
+      "id": "web-015",
+      "term": "hydration",
+      "definition": "Attaching JavaScript to server-rendered HTML",
+      "difficulty": "hard"
+    }
+  ],
+  "levels": [
+    {
+      "id": 1,
+      "name": "Foundations",
+      "concepts": ["web-001", "web-002", "web-003"],
+      "requiredXp": 0,
+      "gameMode": "quiz"
+    },
+    {
+      "id": 2,
+      "name": "Core Concepts",
+      "concepts": ["web-004", "web-005", "web-006"],
+      "requiredXp": 100,
+      "gameMode": "quiz"
+    },
+    {
+      "id": 3,
+      "name": "Speed Layout",
+      "concepts": ["web-007", "web-008", "web-009"],
+      "requiredXp": 200,
+      "gameMode": "race"
+    },
+    {
+      "id": 4,
+      "name": "React Basics",
+      "concepts": ["web-010", "web-011", "web-012"],
+      "requiredXp": 350,
+      "gameMode": "quiz"
+    },
+    {
+      "id": 5,
+      "name": "Advanced",
+      "concepts": ["web-013", "web-014", "web-015"],
+      "requiredXp": 500,
+      "gameMode": "quiz"
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "id": "programming-basics",
+  "title": "Programming Basics",
+  "description": "Essential programming concepts every developer should know",
+  "icon": "code-practice",
+  "order": 1,
+  "concepts": [
+    {
+      "id": "pb-001",
+      "term": "variable",
+      "definition": "A named container that stores a value in memory",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pb-002",
+      "term": "function",
+      "definition": "A reusable block of code that performs a specific task",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pb-003",
+      "term": "loop",
+      "definition": "A control structure that repeats code until a condition is met",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pb-004",
+      "term": "array",
+      "definition": "An ordered collection of elements accessed by index",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pb-005",
+      "term": "object",
+      "definition": "A collection of key-value pairs representing an entity",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pb-006",
+      "term": "conditional",
+      "definition": "A statement that executes code based on a true or false condition",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pb-007",
+      "term": "string",
+      "definition": "A sequence of characters representing text",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pb-008",
+      "term": "boolean",
+      "definition": "A data type with only two values: true or false",
+      "difficulty": "easy"
+    },
+    {
+      "id": "pb-009",
+      "term": "parameter",
+      "definition": "A variable listed in a function definition that receives input",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pb-010",
+      "term": "return value",
+      "definition": "The output a function sends back after execution",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pb-011",
+      "term": "scope",
+      "definition": "The region of code where a variable is accessible",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pb-012",
+      "term": "recursion",
+      "definition": "A function that calls itself to solve smaller subproblems",
+      "difficulty": "hard"
+    },
+    {
+      "id": "pb-013",
+      "term": "callback",
+      "definition": "A function passed as an argument to be executed later",
+      "difficulty": "medium"
+    },
+    {
+      "id": "pb-014",
+      "term": "async",
+      "definition": "Code that runs without blocking other operations",
+      "difficulty": "hard"
+    },
+    {
+      "id": "pb-015",
+      "term": "promise",
+      "definition": "An object representing eventual completion of an async operation",
+      "difficulty": "hard"
+    }
+  ],
+  "levels": [
+    {
+      "id": 1,
+      "name": "Data Types",
+      "concepts": ["pb-001", "pb-007", "pb-008"],
+      "requiredXp": 0,
+      "gameMode": "quiz"
+    },
+    {
+      "id": 2,
+      "name": "Structures",
+      "concepts": ["pb-004", "pb-005", "pb-006"],
+      "requiredXp": 100,
+      "gameMode": "quiz"
+    },
+    {
+      "id": 3,
+      "name": "Speed Round",
+      "concepts": ["pb-002", "pb-003", "pb-009"],
+      "requiredXp": 200,
+      "gameMode": "race"
+    },
+    {
+      "id": 4,
+      "name": "Functions",
+      "concepts": ["pb-010", "pb-011", "pb-013"],
+      "requiredXp": 350,
+      "gameMode": "quiz"
+    },
+    {
+      "id": 5,
+      "name": "Advanced",
+      "concepts": ["pb-012", "pb-014", "pb-015"],
+      "requiredXp": 500,
+      "gameMode": "quiz"
+    }
+  ]
+}
