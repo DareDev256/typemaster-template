@@ -1,7 +1,12 @@
 import { UserProgress, ChapterType } from "@/types/game";
+import { config } from "@/data/curriculum";
+import { XP_PER_LEVEL } from "@/lib/constants";
 
-const STORAGE_KEY = "typemaster_progress";
-const LAST_PLAYED_KEY = "typemaster_last_played";
+// Derive storage keys from site config name to avoid collisions
+// when multiple instances run on the same domain
+const prefix = config.siteName.toLowerCase().replace(/\s+/g, "_");
+const STORAGE_KEY = `${prefix}_progress`;
+const LAST_PLAYED_KEY = `${prefix}_last_played`;
 
 const defaultProgress: UserProgress = {
   xp: 0,
@@ -39,7 +44,7 @@ export function updateProgress(updates: Partial<UserProgress>): UserProgress {
 export function addXP(amount: number): UserProgress {
   const current = getProgress();
   const newXP = current.xp + amount;
-  const newLevel = Math.floor(newXP / 100) + 1; // 100 XP per level
+  const newLevel = Math.floor(newXP / XP_PER_LEVEL) + 1;
 
   return updateProgress({
     xp: newXP,
@@ -111,7 +116,7 @@ export function updateStreak(): UserProgress {
     newStreak = current.streak + 1;
   } else if (lastPlayed !== today) {
     // Didn't play yesterday or today, reset streak
-    newStreak = 1;
+    newStreak = 0;
   }
   // If lastPlayed === today, keep current streak
 

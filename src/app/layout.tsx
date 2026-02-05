@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { config } from "@/data/curriculum";
 
 export const metadata: Metadata = {
-  title: "TypeMaster AI",
-  description: "Learn AI/ML engineering through typing games",
+  title: config.siteName,
+  description: config.description,
+  keywords: [config.siteName, "typing game", "learn by typing"],
+  openGraph: {
+    title: config.siteName,
+    description: config.description,
+    type: "website",
+  },
 };
 
 export default function RootLayout({

@@ -27,8 +27,12 @@ export default function LevelPage() {
   const chapterId = params.chapter as ChapterType;
   const levelId = parseInt(params.level as string);
 
+  // Validate URL params: levelId must be a positive integer, chapterId must match a known chapter
+  const isValidLevelId = Number.isInteger(levelId) && levelId > 0;
   const chapter = chapters.find((c) => c.id === chapterId);
-  const level = chapter?.levels.find((l) => l.id === levelId);
+  const level = isValidLevelId
+    ? chapter?.levels.find((l) => l.id === levelId)
+    : undefined;
 
   const concepts = useMemo(() => {
     if (!level) return [];
@@ -58,9 +62,15 @@ export default function LevelPage() {
   }, [chapterId, router]);
 
   if (!chapter || !level) {
+    const errorMessage = !isValidLevelId
+      ? "Invalid level ID — must be a positive number"
+      : !chapter
+      ? `Unknown chapter "${chapterId}"`
+      : "Level not found";
+
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4">
-        <p className="font-pixel text-arcade-error">Level not found</p>
+        <p className="font-pixel text-arcade-error">{errorMessage}</p>
         <Link href="/play">
           <Button variant="secondary">BACK TO CHAPTERS</Button>
         </Link>

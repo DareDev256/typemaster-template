@@ -11,6 +11,11 @@ import { VictoryScreen } from "./VictoryScreen";
 import { useTimer } from "@/hooks/useTimer";
 import { useGameStats } from "@/hooks/useGameStats";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
+import {
+  XP_PER_CORRECT_ANSWER,
+  ACCURACY_BONUS_THRESHOLD,
+  ACCURACY_BONUS_MULTIPLIER,
+} from "@/lib/constants";
 
 interface QuizModeProps {
   concepts: Concept[];
@@ -137,9 +142,11 @@ export function QuizMode({
   );
 
   const calculateXP = useCallback(() => {
-    const baseXP = correctAnswers * 10;
+    const baseXP = correctAnswers * XP_PER_CORRECT_ANSWER;
     const accuracyBonus =
-      stats.accuracy >= 90 ? Math.round(baseXP * 0.2) : 0;
+      stats.accuracy >= ACCURACY_BONUS_THRESHOLD
+        ? Math.round(baseXP * ACCURACY_BONUS_MULTIPLIER)
+        : 0;
     return baseXP + accuracyBonus;
   }, [correctAnswers, stats.accuracy]);
 

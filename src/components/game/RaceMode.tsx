@@ -11,6 +11,11 @@ import { VictoryScreen } from "./VictoryScreen";
 import { useTimer } from "@/hooks/useTimer";
 import { useGameStats } from "@/hooks/useGameStats";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
+import {
+  XP_PER_CORRECT_ANSWER,
+  ACCURACY_BONUS_THRESHOLD,
+  ACCURACY_BONUS_MULTIPLIER,
+} from "@/lib/constants";
 
 interface RaceModeProps {
   concepts: Concept[];
@@ -35,11 +40,9 @@ export function RaceMode({
 
   const { playSound } = useSoundEffects();
 
-  // Shuffle and repeat concepts for endless supply
+  // Shuffle concepts once; use modulo indexing to cycle through them
   const shuffledConcepts = useMemo(() => {
-    const shuffled = [...concepts].sort(() => Math.random() - 0.5);
-    // Repeat to have enough for 60 seconds of gameplay
-    return [...shuffled, ...shuffled, ...shuffled, ...shuffled];
+    return [...concepts].sort(() => Math.random() - 0.5);
   }, [concepts]);
 
   const currentConcept = shuffledConcepts[currentIndex % shuffledConcepts.length];
@@ -128,9 +131,11 @@ export function RaceMode({
   }, [timeLeft, isStarted, playSound]);
 
   const calculateXP = useCallback(() => {
-    const baseXP = correctAnswers * 10;
+    const baseXP = correctAnswers * XP_PER_CORRECT_ANSWER;
     const accuracyBonus =
-      stats.accuracy >= 90 ? Math.round(baseXP * 0.2) : 0;
+      stats.accuracy >= ACCURACY_BONUS_THRESHOLD
+        ? Math.round(baseXP * ACCURACY_BONUS_MULTIPLIER)
+        : 0;
     const speedBonus = correctAnswers >= 10 ? 50 : 0;
     return baseXP + accuracyBonus + speedBonus;
   }, [correctAnswers, stats.accuracy]);
