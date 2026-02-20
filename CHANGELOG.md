@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.0] (2026-02-20)
+
+### Changed
+- **Centralized storage key registry** — All localStorage keys now derive from a single `storage-keys.ts` module, namespaced by `config.siteName`. Previously, keys were scattered across `storage.ts`, `useSoundEffects.ts`, and `openai.ts` with inconsistent namespacing
+- **Default chapter is now dynamic** — `storage.ts` defaults to the first loaded chapter (`chapters[0].id`) instead of hardcoded `"ai-foundations"`, so forks work correctly out of the box
+
+### Fixed
+- **Reset button was silently broken** — The reset button in `/play` used hardcoded `"typemaster_progress"` and `"typemaster_last_played"` localStorage keys instead of the namespaced keys from `storage.ts`. Any fork with a different `siteName` would have a non-functional reset. Now uses the exported `resetProgress()` function
+- **Sound mute preference leaked between instances** — `useSoundEffects.ts` used `"typemaster_muted"` regardless of site name. Now namespaced via centralized key registry
+- **OpenAI key leaked between instances** — `openai.ts` used `"typemaster_openai_key"` regardless of site name. Now namespaced
+
+### Removed
+- **Unused `GameState` interface** from `types/game.ts` — was defined but never consumed by any component or hook
+
 ## v1.0.0 (2025-01-11)
 
 ### Initial Release

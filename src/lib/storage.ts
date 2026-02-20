@@ -1,17 +1,12 @@
 import { UserProgress, ChapterType } from "@/types/game";
-import { config } from "@/data/curriculum";
+import { chapters } from "@/data/curriculum";
 import { XP_PER_LEVEL } from "@/lib/constants";
-
-// Derive storage keys from site config name to avoid collisions
-// when multiple instances run on the same domain
-const prefix = config.siteName.toLowerCase().replace(/\s+/g, "_");
-const STORAGE_KEY = `${prefix}_progress`;
-const LAST_PLAYED_KEY = `${prefix}_last_played`;
+import { STORAGE_KEYS } from "@/lib/storage-keys";
 
 const defaultProgress: UserProgress = {
   xp: 0,
   level: 1,
-  currentChapter: "ai-foundations",
+  currentChapter: chapters[0]?.id ?? "default",
   completedLevels: [],
   streak: 0,
   conceptScores: {},
@@ -21,7 +16,7 @@ export function getProgress(): UserProgress {
   if (typeof window === "undefined") return defaultProgress;
 
   try {
-    const stored = localStorage.getItem(STORAGE_KEY);
+    const stored = localStorage.getItem(STORAGE_KEYS.progress);
     if (!stored) return defaultProgress;
     return { ...defaultProgress, ...JSON.parse(stored) };
   } catch {
@@ -31,7 +26,7 @@ export function getProgress(): UserProgress {
 
 export function saveProgress(progress: UserProgress): void {
   if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(progress));
 }
 
 export function updateProgress(updates: Partial<UserProgress>): UserProgress {
@@ -105,7 +100,7 @@ export function getConceptsForReview(limit = 5): string[] {
 
 export function updateStreak(): UserProgress {
   const current = getProgress();
-  const lastPlayed = localStorage.getItem(LAST_PLAYED_KEY);
+  const lastPlayed = localStorage.getItem(STORAGE_KEYS.lastPlayed);
   const today = new Date().toDateString();
   const yesterday = new Date(Date.now() - 86400000).toDateString();
 
@@ -120,13 +115,13 @@ export function updateStreak(): UserProgress {
   }
   // If lastPlayed === today, keep current streak
 
-  localStorage.setItem(LAST_PLAYED_KEY, today);
+  localStorage.setItem(STORAGE_KEYS.lastPlayed, today);
 
   return updateProgress({ streak: newStreak });
 }
 
 export function resetProgress(): void {
   if (typeof window === "undefined") return;
-  localStorage.removeItem(STORAGE_KEY);
-  localStorage.removeItem(LAST_PLAYED_KEY);
+  localStorage.removeItem(STORAGE_KEYS.progress);
+  localStorage.removeItem(STORAGE_KEYS.lastPlayed);
 }

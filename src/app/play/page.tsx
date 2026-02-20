@@ -8,6 +8,7 @@ import { ChapterCard } from "@/components/game/ChapterCard";
 import { Button } from "@/components/ui/Button";
 import { useProgress } from "@/hooks/useProgress";
 import { ChapterType } from "@/types/game";
+import { resetProgress } from "@/lib/storage";
 
 export default function PlayPage() {
   const {
@@ -60,8 +61,7 @@ export default function PlayPage() {
                 "Reset all progress? This cannot be undone!"
               )
             ) {
-              localStorage.removeItem("typemaster_progress");
-              localStorage.removeItem("typemaster_last_played");
+              resetProgress();
               window.location.reload();
             }
           }}

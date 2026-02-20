@@ -1,6 +1,5 @@
 import { Concept } from "@/types/game";
-
-const OPENAI_KEY_STORAGE = "typemaster_openai_key";
+import { STORAGE_KEYS } from "@/lib/storage-keys";
 
 export interface QuizQuestion {
   question: string;
@@ -17,19 +16,19 @@ export interface ConceptExplanation {
 // Get API key from localStorage
 export function getApiKey(): string | null {
   if (typeof window === "undefined") return null;
-  return localStorage.getItem(OPENAI_KEY_STORAGE);
+  return localStorage.getItem(STORAGE_KEYS.openaiKey);
 }
 
 // Save API key to localStorage
 export function saveApiKey(key: string): void {
   if (typeof window === "undefined") return;
-  localStorage.setItem(OPENAI_KEY_STORAGE, key);
+  localStorage.setItem(STORAGE_KEYS.openaiKey, key);
 }
 
 // Remove API key from localStorage
 export function removeApiKey(): void {
   if (typeof window === "undefined") return;
-  localStorage.removeItem(OPENAI_KEY_STORAGE);
+  localStorage.removeItem(STORAGE_KEYS.openaiKey);
 }
 
 // Test if API key is valid

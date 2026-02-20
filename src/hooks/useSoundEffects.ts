@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { STORAGE_KEYS } from "@/lib/storage-keys";
 
 type SoundType =
   | "keypress"
@@ -9,8 +10,6 @@ type SoundType =
   | "levelComplete"
   | "timeWarning";
 
-const STORAGE_KEY = "typemaster_muted";
-
 export function useSoundEffects() {
   const audioContextRef = useRef<AudioContext | null>(null);
   const [isMuted, setIsMuted] = useState(false);
@@ -18,7 +17,7 @@ export function useSoundEffects() {
   // Load muted preference on mount
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = localStorage.getItem(STORAGE_KEYS.muted);
       if (stored === "true") {
         setIsMuted(true);
       }
@@ -150,7 +149,7 @@ export function useSoundEffects() {
   const toggleMute = useCallback(() => {
     setIsMuted((prev) => {
       const newValue = !prev;
-      localStorage.setItem(STORAGE_KEY, String(newValue));
+      localStorage.setItem(STORAGE_KEYS.muted, String(newValue));
       return newValue;
     });
   }, []);

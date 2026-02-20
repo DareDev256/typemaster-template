@@ -195,12 +195,12 @@ This is a standard Next.js 14+ app. Deploy to any platform that supports Next.js
 
 ## Tech Stack
 
-- **Next.js 14+** - React framework with App Router
+- **Next.js 16** - React framework with App Router
 - **TypeScript** - Type safety
 - **Tailwind CSS 4** - Styling (uses `@theme inline`)
 - **Framer Motion** - Animations
 - **Web Audio API** - Procedural 8-bit sounds
-- **LocalStorage** - Progress persistence
+- **LocalStorage** - Progress persistence (auto-namespaced per instance)
 
 ## File Structure
 
@@ -218,6 +218,8 @@ typemaster-template/
 │   ├── hooks/                   # Custom React hooks
 │   ├── lib/
 │   │   ├── curriculum-loader.ts # Loads JSON curriculum
+│   │   ├── storage-keys.ts      # Centralized localStorage key registry
+│   │   ├── storage.ts           # Progress persistence (localStorage)
 │   │   └── openai.ts            # Optional AI integration
 │   └── types/game.ts            # TypeScript types
 ├── public/                      # Static assets

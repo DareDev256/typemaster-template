@@ -26,15 +26,6 @@ export interface Level {
   gameMode: "quiz" | "race";
 }
 
-export interface GameState {
-  currentConcept: Concept | null;
-  userInput: string;
-  correctChars: number;
-  incorrectChars: number;
-  startTime: number | null;
-  isComplete: boolean;
-}
-
 export interface UserProgress {
   xp: number;
   level: number;
