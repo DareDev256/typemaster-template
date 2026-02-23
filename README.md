@@ -193,6 +193,18 @@ This is a standard Next.js 14+ app. Deploy to any platform that supports Next.js
 - Railway
 - Self-hosted with `npm run build && npm start`
 
+## Security
+
+TypeMaster ships with production-grade HTTP security headers configured in `next.config.ts`:
+
+| Header | Value | Purpose |
+|--------|-------|---------|
+| `Referrer-Policy` | `strict-origin-when-cross-origin` | Safe cross-origin requests (fixes YouTube Error 153) |
+| `X-Content-Type-Options` | `nosniff` | Prevents MIME-type sniffing |
+| `X-Frame-Options` | `SAMEORIGIN` | Blocks clickjacking |
+| `X-XSS-Protection` | `1; mode=block` | Legacy XSS filter |
+| `Permissions-Policy` | `camera=(), microphone=(), geolocation=()` | Minimizes API surface |
+
 ## Tech Stack
 
 - **Next.js 16** - React framework with App Router

@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.1.1] (2026-02-23)
+
+### Security
+- **Added HTTP security headers** — Configured `next.config.ts` with production-grade security headers applied to all routes:
+  - `Referrer-Policy: strict-origin-when-cross-origin` — Fixes YouTube Error 153 for embedded video content by sending proper origin info on cross-origin requests
+  - `X-Content-Type-Options: nosniff` — Prevents MIME-type sniffing attacks
+  - `X-Frame-Options: SAMEORIGIN` — Blocks clickjacking while allowing same-origin iframes
+  - `X-XSS-Protection: 1; mode=block` — Enables XSS filter in legacy browsers
+  - `Permissions-Policy` — Disables camera, microphone, and geolocation APIs by default
+
 ## [1.1.0] (2026-02-20)
 
 ### Changed
