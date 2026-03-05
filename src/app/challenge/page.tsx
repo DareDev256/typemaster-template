@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
@@ -15,7 +14,6 @@ import { useProgress } from "@/hooks/useProgress";
 type ChallengeMode = "select" | "quiz" | "explain";
 
 export default function ChallengePage() {
-  const router = useRouter();
   const [mode, setMode] = useState<ChallengeMode>("select");
   const [hasApiKey, setHasApiKey] = useState(false);
   const { progress, isLoading } = useProgress();
