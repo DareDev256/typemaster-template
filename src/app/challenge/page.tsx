@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
@@ -15,13 +15,9 @@ type ChallengeMode = "select" | "quiz" | "explain";
 
 export default function ChallengePage() {
   const [mode, setMode] = useState<ChallengeMode>("select");
-  const [hasApiKey, setHasApiKey] = useState(false);
+  const hasApiKey = useMemo(() => !!getApiKey(), []);
   const { progress, isLoading } = useProgress();
 
-  // Check for API key on mount
-  useEffect(() => {
-    setHasApiKey(!!getApiKey());
-  }, []);
 
   // Get concepts from completed levels
   const availableConcepts = useMemo(() => {
