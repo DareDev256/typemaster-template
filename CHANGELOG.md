@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0] (2026-03-07)
+
+### Changed
+- **Extracted shared validation into `src/utils/validation.ts`** — Level param validation, API key presence checks, and completed-concepts filtering are now centralized in a single utility module instead of scattered inline across page components
+- **`challenge/page.tsx`** — Replaced inline API key check and concept filtering with `hasApiKey()` and `getCompletedConcepts()` from validation utility
+- **`play/[chapter]/[level]/page.tsx`** — Replaced inline level/chapter validation with `validateLevelParams()` discriminated union, removing direct dependency on `chapters` array
+
 ## [1.1.1] (2026-02-23)
 
 ### Security

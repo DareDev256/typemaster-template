@@ -3,7 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useState, useMemo, useCallback } from "react";
 import Link from "next/link";
-import { chapters, getConceptById } from "@/data/curriculum";
+import { getConceptById } from "@/data/curriculum";
 import { QuizMode } from "@/components/game/QuizMode";
 import { RaceMode } from "@/components/game/RaceMode";
 import { StudyModeScreen } from "@/components/game/StudyModeScreen";
@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/Button";
 import { SoundToggle } from "@/components/ui/SoundToggle";
 import { ChapterType } from "@/types/game";
 import { useProgress } from "@/hooks/useProgress";
+import { validateLevelParams } from "@/utils/validation";
 
 export default function LevelPage() {
   const params = useParams();
@@ -27,12 +28,10 @@ export default function LevelPage() {
   const chapterId = params.chapter as ChapterType;
   const levelId = parseInt(params.level as string);
 
-  // Validate URL params: levelId must be a positive integer, chapterId must match a known chapter
-  const isValidLevelId = Number.isInteger(levelId) && levelId > 0;
-  const chapter = chapters.find((c) => c.id === chapterId);
-  const level = isValidLevelId
-    ? chapter?.levels.find((l) => l.id === levelId)
-    : undefined;
+  // Validate URL params via centralized validation
+  const params_result = validateLevelParams(chapterId, levelId);
+  const chapter = params_result.valid ? params_result.chapter : undefined;
+  const level = params_result.valid ? params_result.level : undefined;
 
   const concepts = useMemo(() => {
     if (!level) return [];
@@ -62,11 +61,7 @@ export default function LevelPage() {
   }, [chapterId, router]);
 
   if (!chapter || !level) {
-    const errorMessage = !isValidLevelId
-      ? "Invalid level ID — must be a positive number"
-      : !chapter
-      ? `Unknown chapter "${chapterId}"`
-      : "Level not found";
+    const errorMessage = !params_result.valid ? params_result.error : "Level not found";
 
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4">

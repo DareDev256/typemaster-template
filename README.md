@@ -233,6 +233,8 @@ typemaster-template/
 │   │   ├── storage-keys.ts      # Centralized localStorage key registry
 │   │   ├── storage.ts           # Progress persistence (localStorage)
 │   │   └── openai.ts            # Optional AI integration
+│   ├── utils/
+│   │   └── validation.ts        # Shared validation (params, API key, progress)
 │   └── types/game.ts            # TypeScript types
 ├── public/                      # Static assets
 └── package.json

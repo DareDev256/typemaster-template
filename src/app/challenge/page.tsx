@@ -7,30 +7,21 @@ import { Button } from "@/components/ui/Button";
 import { AIQuizMode } from "@/components/game/AIQuizMode";
 import { AIExplainMode } from "@/components/game/AIExplainMode";
 import { SoundToggle } from "@/components/ui/SoundToggle";
-import { getApiKey } from "@/lib/openai";
-import { concepts } from "@/data/curriculum";
 import { useProgress } from "@/hooks/useProgress";
+import { hasApiKey, getCompletedConcepts } from "@/utils/validation";
 
 type ChallengeMode = "select" | "quiz" | "explain";
 
 export default function ChallengePage() {
   const [mode, setMode] = useState<ChallengeMode>("select");
-  const hasApiKey = useMemo(() => !!getApiKey(), []);
+  const apiKeyPresent = useMemo(() => hasApiKey(), []);
   const { progress, isLoading } = useProgress();
 
-
-  // Get concepts from completed levels
-  const availableConcepts = useMemo(() => {
-    if (!progress) return [];
-
-    // Get all concept IDs from completed levels
-    const completedChapters = new Set(
-      progress.completedLevels.map((level) => level.split("-")[0])
-    );
-
-    // Return concepts from chapters where user has completed at least one level
-    return concepts.filter((c) => completedChapters.has(c.chapter));
-  }, [progress]);
+  // Get concepts from completed levels via centralized validation
+  const availableConcepts = useMemo(
+    () => getCompletedConcepts(progress),
+    [progress]
+  );
 
   // Show loading state
   if (isLoading) {
@@ -48,7 +39,7 @@ export default function ChallengePage() {
   }
 
   // No API key - redirect to settings
-  if (!hasApiKey) {
+  if (!apiKeyPresent) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-4">
         <motion.div
