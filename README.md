@@ -8,6 +8,7 @@ A customizable typing game for learning any topic. Fork this template and popula
 
 - **Retro Arcade Theme** - 8-bit pixel art aesthetic with neon colors
 - **Multiple Game Modes** - Quiz mode and timed race mode
+- **Smart Task Selection** - Category-balanced algorithm ensures chapter diversity and difficulty mix
 - **Progress Tracking** - XP system, levels, and streaks saved locally
 - **Study Mode** - Review concepts before playing
 - **AI Challenge** (Optional) - OpenAI-powered quiz generation
@@ -165,6 +166,29 @@ Unknown icon names gracefully fall back to a question mark icon.
 | `requiredXp` | number | Yes | XP needed to unlock (0 for first level) |
 | `gameMode` | string | Yes | `"quiz"` or `"race"` |
 
+## Task Selection Algorithm
+
+TypeMaster uses a **category-balanced selection algorithm** (`diversePick()` in `src/utils/task.ts`) instead of naive random shuffling. This ensures every round feels varied and challenging:
+
+| Guarantee | How It Works |
+|-----------|-------------|
+| **Chapter balance** | Concepts are drawn proportionally via round-robin across all unlocked chapters — no single chapter can dominate a round |
+| **Difficulty floor** | At least 2 hard-difficulty concepts per round (when available), preventing all-easy streaks |
+| **True shuffle** | Final selection uses Fisher-Yates shuffle so presentation order is unpredictable |
+| **Graceful fallback** | If the pool is smaller than the requested count, the entire pool is returned shuffled |
+
+Used by **Race Mode** and **AI Explain Mode**. Quiz Mode uses level-defined concept lists already curated by the curriculum author.
+
+```typescript
+import { diversePick } from "@/utils/task";
+
+// Pick 10 concepts balanced across chapters, at least 2 hard
+const round = diversePick(concepts, 10);
+
+// Custom difficulty floor (at least 3 hard concepts)
+const hardRound = diversePick(concepts, 10, 3);
+```
+
 ## AI Challenge Mode (Optional)
 
 AI Challenge uses OpenAI to generate unique quiz questions based on concepts you've learned. To enable:
@@ -234,6 +258,7 @@ typemaster-template/
 │   │   ├── storage.ts           # Progress persistence (localStorage)
 │   │   └── openai.ts            # Optional AI integration
 │   ├── utils/
+│   │   ├── task.ts              # diversePick() — category-balanced concept selection
 │   │   └── validation.ts        # Shared validation (params, API key, progress)
 │   └── types/game.ts            # TypeScript types
 ├── public/                      # Static assets

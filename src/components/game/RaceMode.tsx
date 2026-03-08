@@ -16,6 +16,7 @@ import {
   ACCURACY_BONUS_THRESHOLD,
   ACCURACY_BONUS_MULTIPLIER,
 } from "@/lib/constants";
+import { diversePick } from "@/utils/task";
 
 interface RaceModeProps {
   concepts: Concept[];
@@ -40,9 +41,9 @@ export function RaceMode({
 
   const { playSound } = useSoundEffects();
 
-  // Shuffle concepts once; use modulo indexing to cycle through them
+  // Category-balanced selection; use modulo indexing to cycle through them
   const shuffledConcepts = useMemo(() => {
-    return [...concepts].sort(() => Math.random() - 0.5);
+    return diversePick(concepts, Math.min(concepts.length, 15));
   }, [concepts]);
 
   const currentConcept = shuffledConcepts[currentIndex % shuffledConcepts.length];

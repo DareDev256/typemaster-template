@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0] (2026-03-08)
+
+### Added
+- **`diversePick()` category-balanced task selection** (`src/utils/task.ts`) — New utility function replaces naive `Math.random()` shuffling with an algorithm that guarantees chapter-proportional selection and a configurable hard-difficulty floor (default 2). Uses round-robin across chapter buckets then Fisher-Yates shuffles the result
+- **Race Mode** now uses `diversePick()` instead of `.sort(() => Math.random() - 0.5)` — rounds cover all unlocked chapters proportionally
+- **AI Explain Mode** now uses `diversePick()` — concept exploration sessions are balanced across chapters
+
 ## [1.2.0] (2026-03-07)
 
 ### Changed

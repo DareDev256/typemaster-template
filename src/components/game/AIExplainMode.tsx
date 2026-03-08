@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { explainConcept, ConceptExplanation } from "@/lib/openai";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
 import { useGameStats } from "@/hooks/useGameStats";
+import { diversePick } from "@/utils/task";
 
 interface AIExplainModeProps {
   concepts: Concept[];
@@ -30,9 +31,9 @@ export function AIExplainMode({ concepts, onExit }: AIExplainModeProps) {
   const { playSound } = useSoundEffects();
   const { stats, startTracking, recordKeypress, reset: resetStats } = useGameStats();
 
-  // Shuffle concepts on mount
+  // Category-balanced selection on mount
   const [shuffledConcepts] = useState(() =>
-    [...concepts].sort(() => Math.random() - 0.5)
+    diversePick(concepts, Math.min(concepts.length, 15))
   );
 
   const currentConcept = shuffledConcepts[currentIndex % shuffledConcepts.length];
