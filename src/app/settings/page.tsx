@@ -9,9 +9,10 @@ import {
   saveApiKey,
   removeApiKey,
   validateApiKey,
+  isValidKeyFormat,
 } from "@/lib/openai";
 
-type ConnectionStatus = "idle" | "testing" | "connected" | "invalid";
+type ConnectionStatus = "idle" | "testing" | "connected" | "invalid" | "bad_format";
 
 export default function SettingsPage() {
   const [apiKey, setApiKey] = useState("");
@@ -31,6 +32,12 @@ export default function SettingsPage() {
     if (!apiKey.trim()) {
       removeApiKey();
       setStatus("idle");
+      return;
+    }
+
+    // Reject obviously malformed keys before making any network call
+    if (!isValidKeyFormat(apiKey.trim())) {
+      setStatus("bad_format");
       return;
     }
 
@@ -128,6 +135,11 @@ export default function SettingsPage() {
             {status === "invalid" && (
               <p className="font-pixel text-[10px] text-arcade-error">
                 ✗ Invalid API key
+              </p>
+            )}
+            {status === "bad_format" && (
+              <p className="font-pixel text-[10px] text-arcade-error">
+                ✗ Key must start with sk- (check format)
               </p>
             )}
           </div>

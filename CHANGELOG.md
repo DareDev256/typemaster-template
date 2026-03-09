@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.3.1] (2026-03-09)
+
+### Security
+- **Added Content-Security-Policy header** — Restricts script/style/connect/font/image sources to prevent XSS injection; only allows `connect-src` to `self` and `https://api.openai.com`
+- **Added HSTS header** — `Strict-Transport-Security: max-age=31536000; includeSubDomains` forces HTTPS and prevents protocol downgrade attacks
+- **API key format validation** — `saveApiKey()` and `validateApiKey()` now reject keys that don't match the `sk-` prefix pattern before touching localStorage or the network
+- **Client-side rate limiting** — OpenAI API calls are capped at 10/minute to prevent quota burn from rapid clicks or automation
+- **AI response structure validation** — `generateQuizQuestion()` and `explainConcept()` now validate parsed JSON matches the expected interface shape, preventing crashes from malformed AI output
+- **Settings page format feedback** — Shows immediate "bad format" error for invalid key patterns instead of making a wasted network call
+
 ## [1.3.0] (2026-03-08)
 
 ### Added

@@ -28,6 +28,36 @@ const securityHeaders = [
     key: "Permissions-Policy",
     value: "camera=(), microphone=(), geolocation=()",
   },
+  {
+    // Forces HTTPS for 1 year, including subdomains
+    // Prevents protocol downgrade attacks and cookie hijacking
+    key: "Strict-Transport-Security",
+    value: "max-age=31536000; includeSubDomains",
+  },
+  {
+    // Content Security Policy — the primary XSS mitigation layer
+    // - default-src 'self': only load resources from same origin
+    // - script-src 'self' 'unsafe-inline' 'unsafe-eval': Next.js requires inline scripts and eval for dev/HMR
+    // - style-src 'self' 'unsafe-inline': Tailwind and Framer Motion inject inline styles
+    // - connect-src 'self' https://api.openai.com: only allow API calls to self and OpenAI
+    // - img-src 'self' data: blob:: allow images from self, data URIs (icons), and blob (canvas)
+    // - font-src 'self': only load fonts from same origin (Press Start 2P is bundled)
+    // - frame-ancestors 'self': equivalent to X-Frame-Options but CSP-level
+    // - base-uri 'self': prevents <base> tag injection attacks
+    // - form-action 'self': prevents form submission to external domains
+    key: "Content-Security-Policy",
+    value: [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      "style-src 'self' 'unsafe-inline'",
+      "connect-src 'self' https://api.openai.com",
+      "img-src 'self' data: blob:",
+      "font-src 'self'",
+      "frame-ancestors 'self'",
+      "base-uri 'self'",
+      "form-action 'self'",
+    ].join("; "),
+  },
 ];
 
 const nextConfig: NextConfig = {

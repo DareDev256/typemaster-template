@@ -223,11 +223,15 @@ TypeMaster ships with production-grade HTTP security headers configured in `next
 
 | Header | Value | Purpose |
 |--------|-------|---------|
+| `Content-Security-Policy` | `default-src 'self'; connect-src 'self' https://api.openai.com; ...` | Primary XSS mitigation — restricts all resource origins |
+| `Strict-Transport-Security` | `max-age=31536000; includeSubDomains` | Forces HTTPS, prevents downgrade attacks |
 | `Referrer-Policy` | `strict-origin-when-cross-origin` | Safe cross-origin requests (fixes YouTube Error 153) |
 | `X-Content-Type-Options` | `nosniff` | Prevents MIME-type sniffing |
 | `X-Frame-Options` | `SAMEORIGIN` | Blocks clickjacking |
 | `X-XSS-Protection` | `1; mode=block` | Legacy XSS filter |
 | `Permissions-Policy` | `camera=(), microphone=(), geolocation=()` | Minimizes API surface |
+
+**API key handling:** Keys are validated against the `sk-` format pattern before storage. OpenAI calls are rate-limited to 10/minute client-side. AI responses are structure-validated before use.
 
 ## Tech Stack
 
