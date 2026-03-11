@@ -8,6 +8,7 @@ import { TypingInput } from "./TypingInput";
 import { Timer } from "./Timer";
 import { Stats } from "./Stats";
 import { VictoryScreen } from "./VictoryScreen";
+import { ShortcutHints } from "./ShortcutHints";
 import { useTimer } from "@/hooks/useTimer";
 import { useGameStats } from "@/hooks/useGameStats";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
@@ -171,6 +172,7 @@ export function QuizMode({
 
   return (
     <div className="min-h-[calc(100vh-60px)] flex flex-col items-center justify-center p-4 md:p-8">
+      <ShortcutHints mode="quiz" />
       {/* Progress indicator */}
       <div className="w-full max-w-2xl mb-6 md:mb-8">
         <div className="flex justify-between items-center mb-2">

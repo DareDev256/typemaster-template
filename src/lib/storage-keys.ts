@@ -16,6 +16,8 @@ export const STORAGE_KEYS = {
   muted: `${prefix}_muted`,
   /** OpenAI API key */
   openaiKey: `${prefix}_openai_key`,
+  /** Whether keyboard shortcut hints have been shown */
+  hintsShown: `${prefix}_hints_shown`,
 } as const;
 
 export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];

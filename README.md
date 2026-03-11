@@ -12,6 +12,7 @@ A customizable typing game for learning any topic. Fork this template and popula
 - **Progress Tracking** - XP system, levels, and streaks saved locally
 - **Study Mode** - Review concepts before playing
 - **AI Challenge** (Optional) - OpenAI-powered quiz generation
+- **Shortcut Hints Overlay** - Contextual keyboard shortcut hints for new users, auto-dismisses on first keystroke
 - **Sound Effects** - Procedural 8-bit audio
 - **Mobile Friendly** - Responsive design works on all devices
 - **100% Customizable** - Change curriculum, branding, and features via JSON

@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0] (2026-03-11)
+
+### Added
+- **Keyboard shortcut hints overlay** — New users see a contextual controls overlay on their first game session. Shows mode-specific shortcuts (Tab to skip in Race mode, backspace hint in Quiz mode). Auto-dismisses after 6 seconds or on first keystroke. Persisted to localStorage so it only shows once.
+- **`useShortcutHints` hook** (`src/hooks/useTypingHandler.ts`) — Manages new-user detection, auto-dismiss timer, and keystroke listener with proper cleanup
+- **`ShortcutHints` component** (`src/components/game/ShortcutHints.tsx`) — Arcade-styled overlay with animated key badges, progress bar, and spring entrance/exit transitions
+- **`hintsShown` storage key** — Added to centralized storage key registry
+
 ## [1.3.1] (2026-03-09)
 
 ### Security
