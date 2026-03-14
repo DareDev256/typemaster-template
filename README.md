@@ -9,7 +9,7 @@ A customizable typing game for learning any topic. Fork this template and popula
 - **Retro Arcade Theme** - 8-bit pixel art aesthetic with neon colors
 - **Multiple Game Modes** - Quiz mode and timed race mode
 - **Smart Task Selection** - Category-balanced algorithm ensures chapter diversity and difficulty mix
-- **Progress Tracking** - XP system, levels, and streaks saved locally
+- **Progress Tracking** - XP system, levels, and streaks saved locally (shared via React context, syncs across tabs)
 - **Study Mode** - Review concepts before playing
 - **AI Challenge** (Optional) - OpenAI-powered quiz generation
 - **Shortcut Hints Overlay** - Contextual keyboard shortcut hints for new users, auto-dismisses on first keystroke
