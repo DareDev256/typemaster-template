@@ -45,6 +45,8 @@ const securityHeaders = [
     // - frame-ancestors 'self': equivalent to X-Frame-Options but CSP-level
     // - base-uri 'self': prevents <base> tag injection attacks
     // - form-action 'self': prevents form submission to external domains
+    // - object-src 'none': blocks Flash/Java plugin-based attacks entirely
+    // - upgrade-insecure-requests: auto-upgrades HTTP→HTTPS for all resources
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
@@ -56,6 +58,8 @@ const securityHeaders = [
       "frame-ancestors 'self'",
       "base-uri 'self'",
       "form-action 'self'",
+      "object-src 'none'",
+      "upgrade-insecure-requests",
     ].join("; "),
   },
 ];

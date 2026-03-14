@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.1] (2026-03-14)
+
+### Security
+- **Prompt injection guard** — All user-controlled strings (concept term/definition) are now sanitized before embedding in OpenAI prompts. Strips template literal chars, collapses multi-newlines, enforces 500-char cap to prevent prompt structure manipulation
+- **localStorage integrity validation** — `getProgress()` now validates the full shape of parsed data against the `UserProgress` schema. Tampered or corrupted payloads are rejected and reset to safe defaults instead of being blindly merged
+- **CSP hardening** — Added `object-src 'none'` (blocks Flash/Java plugin attacks) and `upgrade-insecure-requests` (auto-upgrades HTTP→HTTPS for all sub-resources)
+- **Error message sanitization** — OpenAI API error responses are now filtered through `sanitizeErrorMessage()` before surfacing to the UI. Only safe patterns (rate limit, billing, invalid key) pass through; all other internal details are replaced with a generic message
+
 ## [1.4.0] (2026-03-11)
 
 ### Added

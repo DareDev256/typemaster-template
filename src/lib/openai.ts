@@ -78,6 +78,31 @@ export async function validateApiKey(key: string): Promise<boolean> {
   }
 }
 
+// --- Prompt Injection Guard ---
+// Sanitize user-controlled strings before embedding in AI prompts.
+// Strips characters that could break out of prompt structure or inject instructions.
+function sanitizeForPrompt(input: string): string {
+  return input
+    .replace(/[`${}\\]/g, "")       // Template literal / shell injection chars
+    .replace(/\n{2,}/g, "\n")       // Collapse multi-newlines (prompt structure escape)
+    .slice(0, 500)                  // Hard length cap — no novel-length injections
+    .trim();
+}
+
+// --- Error Sanitizer ---
+// Strips internal details from API errors before surfacing to UI.
+function sanitizeErrorMessage(raw: string): string {
+  // Only expose safe, generic messages — never raw API internals
+  const safePatterns = [
+    /rate limit/i,
+    /invalid.*key/i,
+    /quota/i,
+    /billing/i,
+  ];
+  if (safePatterns.some((p) => p.test(raw))) return raw;
+  return "AI request failed — check your API key and try again";
+}
+
 // --- Response Validators ---
 // Validate AI responses have the expected shape before trusting them.
 // Prevents crashes from malformed/adversarial AI output.
@@ -117,11 +142,14 @@ export async function generateQuizQuestion(
   if (!apiKey) throw new Error("No API key configured");
   checkRateLimit();
 
+  const term = sanitizeForPrompt(concept.term);
+  const definition = sanitizeForPrompt(concept.definition);
+
   const prompt = `You are a quiz master for a typing game about AI/software engineering.
 
 Create a multiple-choice question about this concept:
-Term: ${concept.term}
-Definition: ${concept.definition}
+Term: ${term}
+Definition: ${definition}
 
 Requirements:
 - Question should test understanding, not just recall
@@ -148,7 +176,7 @@ Return ONLY valid JSON in this exact format, no markdown:
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.error?.message || "Failed to generate question");
+    throw new Error(sanitizeErrorMessage(error.error?.message || "Failed to generate question"));
   }
 
   const data = await response.json();
@@ -173,9 +201,12 @@ export async function explainConcept(
   if (!apiKey) throw new Error("No API key configured");
   checkRateLimit();
 
+  const term = sanitizeForPrompt(concept.term);
+  const definition = sanitizeForPrompt(concept.definition);
+
   const prompt = `Explain this AI/software engineering concept for a beginner:
-Term: ${concept.term}
-Definition: ${concept.definition}
+Term: ${term}
+Definition: ${definition}
 
 Provide a helpful explanation with:
 1. A simple analogy (1-2 sentences) - compare it to something from everyday life
@@ -203,7 +234,7 @@ Return ONLY valid JSON in this exact format, no markdown:
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.error?.message || "Failed to generate explanation");
+    throw new Error(sanitizeErrorMessage(error.error?.message || "Failed to generate explanation"));
   }
 
   const data = await response.json();

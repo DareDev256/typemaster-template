@@ -12,13 +12,40 @@ const defaultProgress: UserProgress = {
   conceptScores: {},
 };
 
+/**
+ * Validates parsed localStorage data matches UserProgress shape.
+ * Rejects tampered payloads that could inject unexpected types or
+ * corrupt game state. Returns null if the data fails validation.
+ */
+function validateProgressShape(data: unknown): UserProgress | null {
+  if (typeof data !== "object" || data === null || Array.isArray(data)) return null;
+  const d = data as Record<string, unknown>;
+
+  // Type-check each field — reject if tampered
+  if (typeof d.xp !== "number" || d.xp < 0 || !Number.isFinite(d.xp)) return null;
+  if (typeof d.level !== "number" || d.level < 1 || !Number.isInteger(d.level)) return null;
+  if (typeof d.currentChapter !== "string" || d.currentChapter.length > 100) return null;
+  if (!Array.isArray(d.completedLevels) || !d.completedLevels.every((v: unknown) => typeof v === "string")) return null;
+  if (typeof d.streak !== "number" || d.streak < 0 || !Number.isInteger(d.streak)) return null;
+  if (typeof d.conceptScores !== "object" || d.conceptScores === null || Array.isArray(d.conceptScores)) return null;
+
+  return d as unknown as UserProgress;
+}
+
 export function getProgress(): UserProgress {
   if (typeof window === "undefined") return defaultProgress;
 
   try {
     const stored = localStorage.getItem(STORAGE_KEYS.progress);
     if (!stored) return defaultProgress;
-    return { ...defaultProgress, ...JSON.parse(stored) };
+    const parsed = JSON.parse(stored);
+    const validated = validateProgressShape(parsed);
+    if (!validated) {
+      // Tampered or corrupted — reset to safe defaults
+      localStorage.removeItem(STORAGE_KEYS.progress);
+      return defaultProgress;
+    }
+    return { ...defaultProgress, ...validated };
   } catch {
     return defaultProgress;
   }

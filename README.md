@@ -232,7 +232,11 @@ TypeMaster ships with production-grade HTTP security headers configured in `next
 | `X-XSS-Protection` | `1; mode=block` | Legacy XSS filter |
 | `Permissions-Policy` | `camera=(), microphone=(), geolocation=()` | Minimizes API surface |
 
-**API key handling:** Keys are validated against the `sk-` format pattern before storage. OpenAI calls are rate-limited to 10/minute client-side. AI responses are structure-validated before use.
+**Defense in depth:**
+- **API key handling** — Keys are validated against the `sk-` format pattern before storage. OpenAI calls are rate-limited to 10/minute client-side. AI responses are structure-validated before use.
+- **Prompt injection guard** — Curriculum content is sanitized (dangerous chars stripped, length-capped) before embedding in AI prompts, preventing prompt manipulation via custom curriculum data.
+- **localStorage integrity** — Progress data is validated against the `UserProgress` schema on every read. Tampered or corrupted payloads are rejected and reset to safe defaults.
+- **Error sanitization** — API error messages are filtered before reaching the UI, preventing internal detail leakage.
 
 ## Tech Stack
 

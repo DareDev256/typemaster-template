@@ -1,6 +1,6 @@
 {
   "name": "typemaster-template",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "A customizable typing game for learning any topic",
   "private": false,
   "scripts": {
